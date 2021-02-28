@@ -26,7 +26,7 @@ module.exports = {
     }),
     new CleanWebpackPlugin(),
     new AssetsPlugin({
-      filename: 'react-app-manifest.json',
+      filename: 'my-dungeon-manifest.json',
       path: OUTPUT_PATH,
       prettyPrint: true,
       metadata: { timestamp: new Date() }

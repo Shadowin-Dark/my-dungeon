@@ -13,7 +13,7 @@ module.exports = merge(webpackBaseConf, {
     filename: '[name]-[hash].js',
     sourceMapFilename: 'sourcemaps/[file].map',
     chunkFilename: '[name]-[chunkhash].js',
-    publicPath: '/react-app-template/publish/',
+    publicPath: '/my-dungeon/publish/',
     pathinfo: false
   }
 });
