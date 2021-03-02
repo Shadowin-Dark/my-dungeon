@@ -1,7 +1,7 @@
 # !/bin/bash
 if [ -z "$(git status --porcelain)" ]; then 
-  git branch -D gh-pages
-  git checkout gh-pages
+  git branch -D gh-pages-demo
+  git checkout -b gh-pages-demo
   echo "\x1b[32mInfo: yarn installing...\x1b[39m"
   yarn
   echo "\x1b[32mInfo: building...\x1b[39m"
