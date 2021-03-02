@@ -1,0 +1,27 @@
+.field0 {
+  background-color: gray;
+}
+.field0::before {
+  background-color: gray;
+}
+.field0::after {
+  background-color: gray;
+}
+.field0 > div {
+  z-index: 1;
+  font-size: 30px;
+}
+
+.field1 {
+  background-color: greenyellow;
+}
+.field1::before {
+  background-color: greenyellow;
+}
+.field1::after {
+  background-color: greenyellow;
+}
+.field1 > div {
+  z-index: 1;
+  font-size: 30px;
+}

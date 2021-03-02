@@ -1,0 +1,14 @@
+.layout {
+  min-height: 100vh;
+}
+
+.left-panel {
+  background: gold;
+  width: 200px;
+  color: #ffffff;
+}
+
+.playground {
+  overflow: scroll;
+  height: 100vh;
+}
