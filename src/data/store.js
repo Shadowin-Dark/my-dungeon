@@ -2,20 +2,26 @@ import React, { useContext, useReducer } from 'react';
 import { buildMap } from './map/map';
 import { StoreContext } from './context';
 
-const initState = {
-  map: buildMap(5, 5)
+export const initState = {
+  map: buildMap(5, 5),
+  focused: { x: -1, y: -1 },
+  count: 1
 };
 
-const reducer = (state, action) => {
+export const reducer = (state, action) => {
+  // console.log('reduce',state,action);
   switch (action.type) {
-    case 'move': {
-      const { i, j } = action.value;
-      state.map[i][j].hide = false;
-      state.map[i][j].user = 1;
-      return {
-        ...state
-      };
+    case 'FOCUS': {
+      const { x, y } = action.value;
+      state.focused = { x, y };
+      return { ...state };
     }
+    // case 'MOVE': {
+    //   const { i, j } = action.value;
+    //   state.map[i][j].hide = false;
+    //   state.map[i][j].user = 1;
+    //   break;
+    // }
     default:
       return state;
   }
@@ -27,10 +33,15 @@ const Provider = React.memo(({ children }) => {
   return <StoreContext.Provider value={{ state, dispatch }}>{children}</StoreContext.Provider>;
 });
 
-const Customer = React.memo(({ CMP }) => {
-  const { state, dispatch } = useContext(StoreContext);
-  return React.cloneElement(CMP, { state, dispatch });
-});
+const Customer = CMP =>
+  React.memo(() => {
+    const { state, dispatch } = useContext(StoreContext);
+    // const actions = {
+    //   focus: (x,y) => dispatch({type:'FOCUS', value:{x,y}}),
+    // move: (x,y) =>
+    // }
+    return <CMP state={state} dispatch={dispatch} />;
+  });
 
 export const Store = {
   Provider,

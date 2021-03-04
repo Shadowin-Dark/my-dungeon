@@ -14,7 +14,9 @@ export const PlayField = React.memo(({ Menu, Players, Map, Details }) => {
           <Content>{Players}</Content>
         </Layout>
       </Sider>
-      <Content className={styles.playground}>{Map}</Content>
+      <Content style={{ background: '#bfd8ee' }} className={styles.playground}>
+        {Map}
+      </Content>
       {Details && <Sider>{Details}</Sider>}
     </Layout>
   );

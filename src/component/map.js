@@ -6,7 +6,7 @@ import { FieldList } from '../data/map/field_list';
 import styles from './map.modules.css';
 import fieldStyles from './field.modules.css';
 
-export const Map = React.memo(({ map, onTarget }) => {
+export const Map = React.memo(({ map, focused, onFocus }) => {
   const n = map.length;
   let m = 0;
   if (n > 0) {
@@ -19,9 +19,10 @@ export const Map = React.memo(({ map, onTarget }) => {
           return (
             <Field
               key={field.keyID}
+              className={i === focused.x && j === focused.y ? styles.focused : ''}
               style={{ marginLeft: j === 0 && i % 2 === 0 ? '70px' : '2px' }}
               field={field}
-              onClick={() => onTarget(i, j)}
+              onClick={() => onFocus(i, j)}
             />
           );
         });
@@ -30,10 +31,10 @@ export const Map = React.memo(({ map, onTarget }) => {
   );
 });
 
-const Field = React.memo(({ field, ...options }) => {
+const Field = React.memo(({ field, className, ...options }) => {
   if (field.hide) {
     return (
-      <li {...options} className={fieldStyles.field0}>
+      <li {...options} className={`${className} ${fieldStyles.field0}`}>
         <div>?</div>
       </li>
     );
@@ -41,7 +42,7 @@ const Field = React.memo(({ field, ...options }) => {
 
   const fieldMetadata = FieldList[field.id];
   return (
-    <li {...options} className={fieldStyles[`field${field.id}`]}>
+    <li {...options} className={`${className} ${fieldStyles[`field${field.id}`]}`}>
       <div>{`${fieldMetadata.name}`}</div>
       {field.monster && (
         <div>

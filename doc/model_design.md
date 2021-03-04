@@ -28,12 +28,15 @@
 7. \*logo
 8. \*image
 
-### 地图 - **map**
+### 地图 - **world**
 
-1. array for N\*M
-   1. **field**
-   2. status
-2. 额外信息
+1. map: array for N\*M
+   1. **field**.id
+   2. hide - 地块是否被探索
+   3. **monster**.id
+   4. **user**.id
+2. user: array for **user**
+3. selected: [x,y] 当前选中的 field 坐标
 
 ### 怪物 - **monster**
 
