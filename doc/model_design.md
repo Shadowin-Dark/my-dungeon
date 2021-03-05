@@ -30,7 +30,7 @@
 
 ### 地图 - **world**
 
-1. map: array for N\*M
+1. map: array for N\*M **mapUnit**
    1. **field**.id
    2. hide - 地块是否被探索
    3. **monster**.id

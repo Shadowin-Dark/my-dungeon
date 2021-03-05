@@ -15,13 +15,13 @@ export const Map = React.memo(({ map, focused, onFocus }) => {
   return (
     <ul className={styles.boxFw} style={{ width: `${m * 135 + 100}px` }}>
       {map.map((row, i) => {
-        return row.map((field, j) => {
+        return row.map((mapUnit, j) => {
           return (
-            <Field
-              key={field.keyID}
+            <MapUnit
+              key={mapUnit.keyID}
               className={i === focused.x && j === focused.y ? styles.focused : ''}
               style={{ marginLeft: j === 0 && i % 2 === 0 ? '70px' : '2px' }}
-              field={field}
+              mapUnit={mapUnit}
               onClick={() => onFocus(i, j)}
             />
           );
@@ -31,8 +31,8 @@ export const Map = React.memo(({ map, focused, onFocus }) => {
   );
 });
 
-const Field = React.memo(({ field, className, ...options }) => {
-  if (field.hide) {
+const MapUnit = React.memo(({ mapUnit, className, ...options }) => {
+  if (mapUnit.hide) {
     return (
       <li {...options} className={`${className} ${fieldStyles.field0}`}>
         <div>?</div>
@@ -40,16 +40,16 @@ const Field = React.memo(({ field, className, ...options }) => {
     );
   }
 
-  const fieldMetadata = FieldList[field.id];
+  const field = FieldList[mapUnit.fieldID];
   return (
     <li {...options} className={`${className} ${fieldStyles[`field${field.id}`]}`}>
-      <div>{`${fieldMetadata.name}`}</div>
-      {field.monster && (
+      <div>{`${field.name}`}</div>
+      {mapUnit.monster && (
         <div>
           <WeiboOutlined />
         </div>
       )}
-      {field.user && (
+      {mapUnit.user && (
         <div>
           <QqOutlined />
         </div>
