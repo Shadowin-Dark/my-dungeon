@@ -2,12 +2,12 @@ import React, { useContext, useReducer } from 'react';
 import { buildMap } from './map/map';
 import { initPlay } from './map/player';
 import { StoreContext } from './context';
-import { ajustLocations } from './actions/move';
+import { ajustPositions } from './actions/move';
 
 export const initState = {
   map: buildMap(5, 5),
   players: initPlay(1),
-  playerLoc: [{ x: 0, y: 0 }],
+  playerPos: [{ x: 0, y: 0 }],
   focused: { x: -1, y: -1 },
   count: 1
 };
@@ -26,10 +26,10 @@ export const reducer = (state, action) => {
     case 'MOVE': {
       const { x, y, playerID } = action.value;
       state.map[x][y].hide = false;
-      ajustLocations(state.map, x, y).forEach(loc => {
-        state.map[loc.x][loc.y].hide = false;
+      ajustPositions(state.map, x, y).forEach(pos => {
+        state.map[pos.x][pos.y].hide = false;
       });
-      state.playerLoc[playerID] = { x, y };
+      state.playerPos[playerID] = { x, y };
       console.log('move state', state);
       return { ...state };
     }

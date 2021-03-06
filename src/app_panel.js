@@ -20,12 +20,12 @@ export const AppPanel = React.memo(() => {
 const App = Store.Customer(
   React.memo(props => {
     const { state, dispatch } = props;
-    const { map, playerLoc, focused } = state;
+    const { map, playerPos, focused } = state;
 
     console.log('state', state);
     const ifShowDetails = !(focused.x === -1 && focused.y === -1);
     const startGameTrigger = () =>
-      dispatch({ type: 'MOVE', value: { x: playerLoc[0].x, y: playerLoc[0].y, playerID: 0 } });
+      dispatch({ type: 'MOVE', value: { x: playerPos[0].x, y: playerPos[0].y, playerID: 0 } });
     const move = () =>
       dispatch({ type: 'MOVE', value: { x: focused.x, y: focused.y, playerID: 0 } });
     return (
@@ -48,7 +48,7 @@ const App = Store.Customer(
         Map={
           <Map
             map={map}
-            playerLoc={playerLoc}
+            playerPos={playerPos}
             focused={focused}
             onFocus={(x, y) => dispatch({ type: 'FOCUS', value: { x, y } })}
           />

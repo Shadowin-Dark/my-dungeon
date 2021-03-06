@@ -6,12 +6,12 @@ import { FieldList } from '../data/map/field_list';
 import styles from './map.modules.css';
 import fieldStyles from './field.modules.css';
 
-const targetLocation = locations => {
-  const locationMap = {};
-  for (let i = 0; i < locations.length; i++) {
-    locationMap[`${locations[i].x}:${locations[i].y}`] = i;
+const targetPosition = positions => {
+  const positionMap = {};
+  for (let i = 0; i < positions.length; i++) {
+    positionMap[`${positions[i].x}:${positions[i].y}`] = i;
   }
-  return locationMap;
+  return positionMap;
 };
 
 const size = map => {
@@ -23,10 +23,10 @@ const size = map => {
   return [n, m];
 };
 
-export const Map = React.memo(({ map, playerLoc, focused, onFocus }) => {
+export const Map = React.memo(({ map, playerPos, focused, onFocus }) => {
   console.log('Rendering Map');
 
-  const playerLocMap = targetLocation(playerLoc);
+  const playerPosMap = targetPosition(playerPos);
   const [, m] = size(map);
   return (
     <ul className={styles.boxFw} style={{ width: `${m * 135 + 100}px` }}>
@@ -38,7 +38,7 @@ export const Map = React.memo(({ map, playerLoc, focused, onFocus }) => {
               className={i === focused.x && j === focused.y ? styles.focused : ''}
               style={{ marginLeft: j === 0 && i % 2 === 0 ? '70px' : '2px' }}
               mapUnit={mapUnit}
-              userID={playerLocMap[`${i}:${j}`] !== undefined ? playerLocMap[`${i}:${j}`] : -1}
+              userID={playerPosMap[`${i}:${j}`] !== undefined ? playerPosMap[`${i}:${j}`] : -1}
               onClick={() => onFocus(i, j)}
             />
           );

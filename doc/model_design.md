@@ -66,7 +66,7 @@
 14. ARMOR
 15. SHOES
 16. ACCESSOR
-17. location - mapping to **map**
+17. position - mapping to **map**
 
 ### 装备 **equipment**
 
