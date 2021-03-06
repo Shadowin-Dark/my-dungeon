@@ -4,17 +4,25 @@ import { initPlay } from './map/player';
 import { StoreContext } from './context';
 import { ajustPositions } from './actions/move';
 
-export const initState = {
-  map: buildMap(5, 5),
-  players: initPlay(1),
-  playerPos: [{ x: 0, y: 0 }],
-  focused: { x: -1, y: -1 },
-  count: 1
+const buildInitState = (x, y, playerNum = 1) => {
+  const state = {
+    map: buildMap(x, y),
+    players: initPlay(playerNum),
+    playerPos: [],
+    focused: { x: -1, y: -1 }
+  };
+  for (let i = 0; i < playerNum; i++) {
+    state.playerPos[i] = { x: 0, y: 0 };
+  }
+  return state;
 };
 
-export const reducer = (state, action) => {
+const reducer = (state, action) => {
   // console.log('reduce',state,action);
   switch (action.type) {
+    case 'RESET': {
+      return action.value;
+    }
     case 'FOCUS': {
       const { x, y } = action.value;
       if (state.focused.x === x && state.focused.y === y) {
@@ -30,7 +38,6 @@ export const reducer = (state, action) => {
         state.map[pos.x][pos.y].hide = false;
       });
       state.playerPos[playerID] = { x, y };
-      console.log('move state', state);
       return { ...state };
     }
     default:
@@ -38,8 +45,14 @@ export const reducer = (state, action) => {
   }
 };
 
+const Reset = ({ size, playerNum, dispatch }) => {
+  const { x, y } = size;
+  const initState = buildInitState(x, y, playerNum);
+  dispatch({ type: 'RESET', value: initState });
+};
+
 const Provider = React.memo(({ children }) => {
-  const [state, dispatch] = useReducer(reducer, initState);
+  const [state, dispatch] = useReducer(reducer, buildInitState(0, 0));
 
   return <StoreContext.Provider value={{ state, dispatch }}>{children}</StoreContext.Provider>;
 });
@@ -56,5 +69,6 @@ const Customer = CMP =>
 
 export const Store = {
   Provider,
-  Customer
+  Customer,
+  Reset
 };

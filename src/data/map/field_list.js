@@ -6,12 +6,24 @@ export const FieldList = [
   },
   {
     id: 1,
-    name: '草地',
-    description: '这是一块草地',
+    name: '测试1',
+    description: '这是一块空地',
     sideEffect: {
       movestart: user => user,
-      movein: user => user,
-      moveout: user => user,
+      movein: [0, user => user],
+      moveout: [0, user => user],
+      battle: (user, monster) => [user, monster],
+      moveend: user => user
+    }
+  },
+  {
+    id: 2,
+    name: '测试2',
+    description: '进入这里需要额外1SPD',
+    sideEffect: {
+      movestart: user => user,
+      movein: [0, user => user],
+      moveout: [0, user => user],
       battle: (user, monster) => [user, monster],
       moveend: user => user
     }

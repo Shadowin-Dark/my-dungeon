@@ -4,6 +4,7 @@ import { PlayField } from './layout/play_field';
 import { Map } from './component/map';
 import { Details } from './component/details';
 import { Players } from './component/player';
+import { Settings as Menu } from './component/menu';
 
 import 'antd/dist/antd.css';
 
@@ -24,19 +25,19 @@ const App = Store.Customer(
 
     console.log('state', state);
     const ifShowDetails = !(focused.x === -1 && focused.y === -1);
-    const startGameTrigger = () =>
-      dispatch({ type: 'MOVE', value: { x: playerPos[0].x, y: playerPos[0].y, playerID: 0 } });
+    const onNewGame = (x, y, playerNum) => {
+      Store.Reset({ size: { x, y }, playerNum, dispatch });
+      state.playerPos.forEach((pos, id) => {
+        dispatch({ type: 'MOVE', value: { x: pos.x, y: pos.y, playerID: id } });
+      });
+    };
+
+    const onFocus = (x, y) => dispatch({ type: 'FOCUS', value: { x, y } });
     const move = () =>
       dispatch({ type: 'MOVE', value: { x: focused.x, y: focused.y, playerID: 0 } });
     return (
       <PlayField
-        Menu={
-          <div>
-            <button type="submit" onClick={startGameTrigger}>
-              Start
-            </button>
-          </div>
-        }
+        Menu={<Menu onNewGame={onNewGame} />}
         Players={<Players players={state.players} />}
         Actions={
           <div>
@@ -45,14 +46,7 @@ const App = Store.Customer(
             </button>
           </div>
         }
-        Map={
-          <Map
-            map={map}
-            playerPos={playerPos}
-            focused={focused}
-            onFocus={(x, y) => dispatch({ type: 'FOCUS', value: { x, y } })}
-          />
-        }
+        Map={<Map map={map} playerPos={playerPos} focused={focused} onFocus={onFocus} />}
         Details={
           ifShowDetails && (
             <Details

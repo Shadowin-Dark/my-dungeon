@@ -29,6 +29,5 @@ export const ajustPositions = (map, x, y) => {
       positions.push({ x: x + 1, y: y + 1 });
     }
   }
-  console.log('positions', positions);
   return positions;
 };

@@ -25,20 +25,21 @@ const size = map => {
 
 export const Map = React.memo(({ map, playerPos, focused, onFocus }) => {
   console.log('Rendering Map');
-
   const playerPosMap = targetPosition(playerPos);
   const [, m] = size(map);
   return (
     <ul className={styles.boxFw} style={{ width: `${m * 135 + 100}px` }}>
       {map.map((row, i) => {
         return row.map((mapUnit, j) => {
+          const userID = playerPosMap[`${i}:${j}`] !== undefined ? playerPosMap[`${i}:${j}`] : -1;
+          const className = i === focused.x && j === focused.y ? styles.focused : '';
           return (
             <MapUnit
               key={mapUnit.keyID}
-              className={i === focused.x && j === focused.y ? styles.focused : ''}
+              className={className}
               style={{ marginLeft: j === 0 && i % 2 === 0 ? '70px' : '2px' }}
               mapUnit={mapUnit}
-              userID={playerPosMap[`${i}:${j}`] !== undefined ? playerPosMap[`${i}:${j}`] : -1}
+              userID={userID}
               onClick={() => onFocus(i, j)}
             />
           );
@@ -49,7 +50,6 @@ export const Map = React.memo(({ map, playerPos, focused, onFocus }) => {
 });
 
 const MapUnit = React.memo(({ mapUnit, userID, className, ...options }) => {
-  console.log('rendering map unit');
   if (mapUnit.hide) {
     return (
       <li {...options} className={`${className} ${fieldStyles.field0}`}>
