@@ -11,6 +11,5 @@ export const buildMap = (n, m) => {
     }
     map.push(row);
   }
-  map[0][0].hide = false;
   return map;
 };

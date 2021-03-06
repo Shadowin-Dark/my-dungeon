@@ -6,12 +6,28 @@ import { FieldList } from '../data/map/field_list';
 import styles from './map.modules.css';
 import fieldStyles from './field.modules.css';
 
-export const Map = React.memo(({ map, focused, onFocus }) => {
+const targetLocation = locations => {
+  const locationMap = {};
+  for (let i = 0; i < locations.length; i++) {
+    locationMap[`${locations[i].x}:${locations[i].y}`] = i;
+  }
+  return locationMap;
+};
+
+const size = map => {
   const n = map.length;
   let m = 0;
   if (n > 0) {
     m = map[0].length;
   }
+  return [n, m];
+};
+
+export const Map = React.memo(({ map, playerLoc, focused, onFocus }) => {
+  console.log('Rendering Map');
+
+  const playerLocMap = targetLocation(playerLoc);
+  const [, m] = size(map);
   return (
     <ul className={styles.boxFw} style={{ width: `${m * 135 + 100}px` }}>
       {map.map((row, i) => {
@@ -22,6 +38,7 @@ export const Map = React.memo(({ map, focused, onFocus }) => {
               className={i === focused.x && j === focused.y ? styles.focused : ''}
               style={{ marginLeft: j === 0 && i % 2 === 0 ? '70px' : '2px' }}
               mapUnit={mapUnit}
+              userID={playerLocMap[`${i}:${j}`] !== undefined ? playerLocMap[`${i}:${j}`] : -1}
               onClick={() => onFocus(i, j)}
             />
           );
@@ -31,7 +48,8 @@ export const Map = React.memo(({ map, focused, onFocus }) => {
   );
 });
 
-const MapUnit = React.memo(({ mapUnit, className, ...options }) => {
+const MapUnit = React.memo(({ mapUnit, userID, className, ...options }) => {
+  console.log('rendering map unit');
   if (mapUnit.hide) {
     return (
       <li {...options} className={`${className} ${fieldStyles.field0}`}>
@@ -49,7 +67,7 @@ const MapUnit = React.memo(({ mapUnit, className, ...options }) => {
           <WeiboOutlined />
         </div>
       )}
-      {mapUnit.user && (
+      {userID >= 0 && (
         <div>
           <QqOutlined />
         </div>
