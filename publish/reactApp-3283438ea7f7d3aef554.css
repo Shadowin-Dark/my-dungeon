@@ -1,0 +1,112 @@
+.layout-modules__layout___1vCOx {
+  min-height: 100vh;
+}
+
+.layout-modules__left-panel___1e39D {
+  background: gold;
+  width: 200px;
+  color: #ffffff;
+}
+
+.layout-modules__playground___1L4mF {
+  overflow: scroll;
+  height: 100vh;
+}
+
+.map-modules__boxFw___3X_uc {
+  margin: 30px auto;
+  padding: 0;
+}
+.map-modules__boxFw___3X_uc > li {
+  width: 130px;
+  height: 74px;
+  /* background-color: #272222; */
+  float: left;
+  list-style-type: none;
+  margin: 20px 2px;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+.map-modules__boxFw___3X_uc > li::before {
+  content: '';
+  width: 130px;
+  height: 74px;
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  /* background-color: #3e3535; */
+  transform: rotate(60deg);
+  cursor: pointer;
+}
+.map-modules__boxFw___3X_uc > li::after {
+  content: '';
+  width: 130px;
+  height: 74px;
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  /* background-color: #3e3535; */
+  transform: rotate(120deg);
+  -webkit-transform: rotate(120deg);
+  cursor: pointer;
+}
+.map-modules__focused___3E_dP {
+  border-left: 5px solid #eff0dc;
+  border-right: 5px solid #eff0dc;
+}
+.map-modules__focused___3E_dP::before {
+  border-left: 5px solid #eff0dc;
+  border-right: 5px solid #eff0dc;
+}
+.map-modules__focused___3E_dP::after {
+  border-left: 5px solid #eff0dc;
+  border-right: 5px solid #eff0dc;
+}
+
+.field-modules__field0___uKcyF {
+  background-color: gray;
+}
+.field-modules__field0___uKcyF::before {
+  background-color: gray;
+}
+.field-modules__field0___uKcyF::after {
+  background-color: gray;
+}
+.field-modules__field0___uKcyF > div {
+  z-index: 1;
+  font-size: 30px;
+}
+
+.field-modules__field1___1WjUk {
+  background-color: greenyellow;
+}
+.field-modules__field1___1WjUk::before {
+  background-color: greenyellow;
+}
+.field-modules__field1___1WjUk::after {
+  background-color: greenyellow;
+}
+.field-modules__field1___1WjUk > div {
+  z-index: 1;
+  font-size: 30px;
+}
+
+.details-modules__close-button___196_Y {
+  color: white;
+  font-size: 20px;
+  background-color: #00000000;
+}
+.details-modules__field-title___1Q1CK {
+  color: white;
+  font-size: 40px;
+  text-align: center;
+}
+.details-modules__field-description___3n-pL {
+  color: white;
+  font-size: 20px;
+  text-align: center;
+}
+
