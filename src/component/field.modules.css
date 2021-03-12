@@ -25,3 +25,17 @@
   z-index: 1;
   font-size: 30px;
 }
+
+.field2 {
+  background-color: rgb(187, 248, 95);
+}
+.field2::before {
+  background-color: rgb(187, 248, 95);
+}
+.field2::after {
+  background-color: rgb(187, 248, 95);
+}
+.field2 > div {
+  z-index: 1;
+  font-size: 30px;
+}

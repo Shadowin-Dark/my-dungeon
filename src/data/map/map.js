@@ -5,7 +5,7 @@ export const buildMap = (n, m) => {
     for (let j = 0; j < m; j++) {
       row.push({
         keyID: `map-unit-${i}-${j}`,
-        fieldID: 1,
+        fieldID: 2,
         hide: true
       });
     }

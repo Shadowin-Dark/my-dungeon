@@ -9,10 +9,10 @@ export const PlayField = React.memo(({ Menu, Players, Actions, Map, Details }) =
   return (
     <Layout className={styles.layout}>
       <Sider>
-        <Layout>
+        <Layout style={{ height: '100%' }}>
           <Header>{Menu}</Header>
           <Content>{Players}</Content>
-          <Footer>{Actions}</Footer>
+          <Footer style={{ padding: '10px' }}>{Actions}</Footer>
         </Layout>
       </Sider>
       <Content style={{ background: '#bfd8ee' }} className={styles.playground}>

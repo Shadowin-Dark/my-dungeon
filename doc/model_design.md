@@ -39,7 +39,9 @@
 4. focus: [x,y] 当前选中的 地块 坐标
 5. current: note 当前游戏进程 包括：
    1. playerID: 当前是哪个 player 的回合
-   2. state: 进行的阶段 one of [start, move, battle, end]
+   2. step: 进行的阶段 one of [start, move, battle, end]
+   3. details: 进行阶段的详细信息 array for [dices, entity, id] 色子数量 对应实体，实体的 ID - 用于存储当前具体状态（掷骰子的操作需要玩家交互）
+   4. detailIndex: 标识 details 数组的具体阶段
 
 ### 怪物 - **monster**
 
