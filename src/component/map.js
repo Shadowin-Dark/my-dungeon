@@ -1,6 +1,7 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import { QqOutlined, WeiboOutlined } from '@ant-design/icons';
 
+import { Store } from '../data/store';
 import { FieldList } from '../data/map/field_list';
 
 import styles from './map.modules.css';
@@ -23,46 +24,72 @@ const size = map => {
   return [n, m];
 };
 
-export const Map = React.memo(({ map, playerPos, focused, onFocus }) => {
-  console.log('Rendering Map');
-  const playerPosMap = targetPosition(playerPos);
-  const [, m] = size(map);
-  return (
-    <ul className={styles.boxFw} style={{ width: `${m * 135 + 100}px` }}>
-      {map.map((row, i) => {
-        return row.map((mapUnit, j) => {
-          const userID = playerPosMap[`${i}:${j}`] !== undefined ? playerPosMap[`${i}:${j}`] : -1;
-          const className = i === focused.x && j === focused.y ? styles.focused : '';
-          return (
-            <MapUnit
-              key={mapUnit.keyID}
-              className={className}
-              style={{ marginLeft: j === 0 && i % 2 === 0 ? '70px' : '2px' }}
-              mapUnit={mapUnit}
-              userID={userID}
-              onClick={() => onFocus(i, j)}
-            />
-          );
-        });
-      })}
-    </ul>
-  );
-});
+export const Map = Store.Customer(
+  React.memo(({ state, dispatch }) => {
+    console.log('Rendering Map');
 
-const MapUnit = React.memo(({ mapUnit, userID, className, ...options }) => {
-  if (mapUnit.hide) {
+    const { map, playerPos, focused } = state;
+
+    const onFocus = useCallback((x, y) => {
+      dispatch({ type: 'FOCUS', value: { x, y } });
+    }, []);
+
+    const playerPosMap = targetPosition(playerPos);
+    const [, m] = size(map);
     return (
-      <li {...options} className={`${className} ${fieldStyles.field0}`}>
+      <ul className={styles.boxFw} style={{ width: `${m * 135 + 100}px` }}>
+        {map.map((row, i) => {
+          return row.map((mapUnit, j) => {
+            const userID = playerPosMap[`${i}:${j}`] !== undefined ? playerPosMap[`${i}:${j}`] : -1;
+            const className = i === focused.x && j === focused.y ? styles.focused : '';
+            return (
+              <MapUnit
+                key={mapUnit.keyID}
+                className={`${
+                  j === 0 && i % 2 === 0 ? styles.rowHeadEven : styles.rowHeadOdd
+                } ${className}`}
+                hide={mapUnit.hide}
+                fieldID={mapUnit.fieldID}
+                monsterID={mapUnit.monsterID}
+                userID={userID}
+                onClick={onFocus}
+                posX={i}
+                posY={j}
+              />
+            );
+          });
+        })}
+      </ul>
+    );
+  })
+);
+
+const MapUnit = React.memo(props => {
+  console.log('Rendering MapUnit');
+  const { className, hide, fieldID, userID, monsterID, onClick, posX, posY, ...options } = props;
+  if (hide) {
+    return (
+      // eslint-disable-next-line
+      <li
+        {...options}
+        className={`${className} ${fieldStyles.field0}`}
+        onClick={() => onClick(posX, posY)}
+      >
         <div>?</div>
       </li>
     );
   }
 
-  const field = FieldList[mapUnit.fieldID];
+  const field = FieldList[fieldID];
   return (
-    <li {...options} className={`${className} ${fieldStyles[`field${field.id}`]}`}>
+    // eslint-disable-next-line
+    <li
+      {...options}
+      className={`${className} ${fieldStyles[`field${field.id}`]}`}
+      onClick={() => onClick(posX, posY)}
+    >
       <div>{`${field.name}`}</div>
-      {mapUnit.monster && (
+      {monsterID && (
         <div>
           <WeiboOutlined />
         </div>

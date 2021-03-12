@@ -22,7 +22,7 @@ export const AppPanel = React.memo(() => {
 const App = Store.Customer(
   React.memo(props => {
     const { state, dispatch } = props;
-    const { map, playerPos, focused, players } = state;
+    const { map, focused } = state;
 
     console.log('state', state);
     const ifShowDetails = !(focused.x === -1 && focused.y === -1);
@@ -30,14 +30,13 @@ const App = Store.Customer(
       Store.Reset({ size: { x, y }, playerNum, dispatch });
     };
 
-    const onFocus = (x, y) => dispatch({ type: 'FOCUS', value: { x, y } });
     return (
       <>
         <PlayField
           Menu={<Menu onNewGame={onNewGame} />}
-          Players={<Players players={players} />}
+          Players={<Players />}
           Actions={<Actions />}
-          Map={<Map map={map} playerPos={playerPos} focused={focused} onFocus={onFocus} />}
+          Map={<Map />}
           Details={
             ifShowDetails && (
               <Details

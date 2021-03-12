@@ -1,15 +1,18 @@
 import React, { useState } from 'react';
+import { Store } from '../data/store';
 
-export const Players = React.memo(({ players }) => {
-  console.log('Rendering Players');
-  return (
-    <>
-      {players.map(player => (
-        <Player key={player.id} player={player} />
-      ))}
-    </>
-  );
-});
+export const Players = Store.Customer(
+  React.memo(({ state }) => {
+    console.log('Rendering Players');
+    return (
+      <>
+        {(state.players || []).map(player => (
+          <Player key={player.id} player={player} />
+        ))}
+      </>
+    );
+  })
+);
 
 const Player = React.memo(({ player }) => {
   const [showDetails, setShowDetails] = useState(true);
